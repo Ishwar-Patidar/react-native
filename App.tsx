@@ -1,45 +1,40 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import { View, Text, Button, TextInput } from 'react-native';
+import { Home } from './src/screens/Home';
+import { Profile } from './src/screens/Profile';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
+const Stack = createNativeStackNavigator();
+const App = () => {
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={
+          {
+            // headerShown: false
+            headerStyle: { backgroundColor: '#f4511e' },
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' },
+          }
+        }
+      >
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Profile" component={Profile}
+          options={{
+            // headerShown: false
+            // title: 'My Profile',
+            headerTitle: () => <Text style={{ color: '#d6d6d6ff', fontSize: 20, fontWeight: 'bold' }}>Profile Page</Text>,
+            headerRight: () => <TextInput style={{ height: 35, width: 100, borderColor: 'gray', borderWidth: 1, paddingHorizontal: 5, backgroundColor:"#fff", color: "#000", textAlign: "center", textAlignVertical:"bottom" }} placeholder='Search' />,
+            // headerBackTitle: 'Back to Home',
+            headerStyle: { backgroundColor: '#777777ff' },
+            headerTintColor: '#d6d6d6ff',
+            headerTitleStyle: { fontWeight: 'bold' },
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
