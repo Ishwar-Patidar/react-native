@@ -1,15 +1,19 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import { Home } from './src/screens/Home';
 import { Profile } from './src/screens/Profile';
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
+
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      {/* <Stack.Navigator
         screenOptions={
           {
             // headerShown: false
@@ -32,9 +36,32 @@ const App = () => {
             headerTitleStyle: { fontWeight: 'bold' },
           }}
         />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+
+      <Tab.Navigator>
+        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen name="Register" component={Register} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
+
+const Login = () => {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Login Screen</Text>
+      <Button title="Go to Home" onPress={() => { }} />
+    </View>
+  );
+}
+
+const Register = () => {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Register</Text>
+      <Button title="Go to Home" onPress={() => { }} />
+    </View>
+  );
+}
 
 export default App;
