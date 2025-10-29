@@ -13,7 +13,7 @@ const Tab = createMaterialTopTabNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator
+      <Stack.Navigator
         screenOptions={
           {
             // headerShown: false
@@ -36,12 +36,12 @@ const App = () => {
             headerTitleStyle: { fontWeight: 'bold' },
           }}
         />
-      </Stack.Navigator> */}
+      </Stack.Navigator>
 
-      <Tab.Navigator>
+      {/* <Tab.Navigator>
         <Tab.Screen name="Login" component={Login} />
         <Tab.Screen name="Register" component={Register} />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
     </NavigationContainer>
   );
 };
