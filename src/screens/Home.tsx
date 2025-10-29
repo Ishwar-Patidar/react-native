@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Button, Text, TextInput, View } from "react-native"
+import List from "../components/List";
 
 export const Home = (props: any) => {
   const [name, setName] = useState('');
   const [data, setData] = useState<any>(null);
+  const [list, setList] = useState<any>(null);
   useEffect(() => {
     getAPIData();
-  }, [name]);
+    getDataList();
+  }, []);
 
   const getAPIData = async () => {
     const url = 'https://jsonplaceholder.typicode.com/posts/1';
     const result = await fetch(url)
       .then(response => response.json())
       .then(json => setData(json))
+      .catch(error => console.error(error));
+  }
+
+    const getDataList = async () => {
+    const url = 'https://jsonplaceholder.typicode.com/posts';
+    const result = await fetch(url)
+      .then(response => response.json())
+      .then(json => setList(json))
       .catch(error => console.error(error));
   }
 
@@ -25,6 +36,9 @@ export const Home = (props: any) => {
         <Text style={{ fontSize: 20, marginBottom: 20 }}>Title : {data?.title}</Text>
         <Text style={{ fontSize: 20, marginBottom: 20 }}>Body : {data?.body}</Text>
       </View>}
+
+
+      {list?.length > 0 && <List list={list}/>}
       <TextInput style={{ borderWidth: 2, borderRadius: 50, minWidth: 200, margin: 5, padding: 5, borderColor: "#000" }} placeholder="Enter your name" onChangeText={(text: any) => setName(text)} />
       <Button title='Go to Profile' onPress={() => props.navigation.navigate('Profile', { name })} />
     </View>
