@@ -5,6 +5,7 @@ import CustomDrawer from '../drawer/CustomDrawer';
 import HomeScreen from '../screens/HomeScreen';
 import { Home } from '../screens/Home';
 import { Profile } from '../screens/Profile';
+import AddProfileFormScreen from '../screens/AddProfileFormScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,7 +23,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Home" component={HomeScreen}  />
       <Drawer.Screen name="List" component={Home}  />
       <Drawer.Screen name="Profile" component={Profile} initialParams={{ name: 'Ishwar' }} />
-      {/* <Drawer.Screen name="/" component={FormScreen} /> */}
+      <Drawer.Screen name="AddProfileForm" component={AddProfileFormScreen} />
       {/* <Drawer.Screen name="Settings" component={FormScreen} /> */}
     </Drawer.Navigator>
   );

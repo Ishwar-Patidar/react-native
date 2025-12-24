@@ -13,7 +13,8 @@ export const Profile = (props: any) => {
   return <>
     <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
       <Text style={{margin: 10, padding: 10}}>My name is : {name}</Text>
-      <Button title='Go to Home' onPress={() => props.navigation.navigate('Home')} />
+      <Button title='Edit Profile' onPress={() => props.navigation.navigate('AddProfileForm')} />
+      {/* <Button title='Go to Home' onPress={() => props.navigation.navigate('Home')} /> */}
     </View>
   </>
 }
