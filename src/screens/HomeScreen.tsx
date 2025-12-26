@@ -1,8 +1,12 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert, Button } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, Button, Image } from 'react-native';
 import { requestCameraPermission, requestGalleryPermission, requestVedioPermission } from '../utils/permissions';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { useState } from 'react';
 
 export default function HomeScreen({ navigation }: any) {
+  const [image, setImage] = useState<any>(null);
+  const [cameraImg, setCameraImg] = useState<any>(null);
+
   const openCamera = async () => {
     const granted = await requestCameraPermission();
 
@@ -11,8 +15,14 @@ export default function HomeScreen({ navigation }: any) {
       return;
     }
 
-    launchCamera({ mediaType: 'photo' }, response => {
-      if (response.assets?.length) {
+    launchCamera({ mediaType: 'photo', quality: 0.7 }, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorMessage);
+      } else if (response.assets?.length) {
+        const selectedImage = response.assets?.[0];
+        setCameraImg(selectedImage);
         console.log(response.assets[0].uri);
       }
     });
@@ -26,8 +36,14 @@ export default function HomeScreen({ navigation }: any) {
       return;
     }
 
-    launchImageLibrary({ mediaType: 'photo' }, response => {
-      if (response.assets?.length) {
+    launchImageLibrary({ mediaType: 'photo', quality: 0.7, }, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorMessage);
+      } else if (response.assets?.length) {
+        const selectedImage = response.assets?.[0];
+        setImage(selectedImage);
         console.log(response.assets[0].uri);
       }
     });
@@ -58,17 +74,28 @@ export default function HomeScreen({ navigation }: any) {
       </TouchableOpacity> */}
 
       <View style={{ gap: 20 }}>
-        <Text>Hello</Text>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Test Camera, Gallery and Vedio</Text>
+        <Text>Take a picture</Text>
+        {cameraImg && (
+          <Image
+            source={{ uri: cameraImg.uri }}
+            style={styles.preview}
+          />
+        )}
         <Button title="Open Camera" onPress={openCamera} />
 
-        <Text>Hello</Text>
+        <Text>Open Gallery</Text>
+        {image && (
+          <Image
+            source={{ uri: image.uri }}
+            style={styles.preview}
+          />
+        )}
         <Button title="Open Gallery" onPress={openGallery} />
 
-        <Text>Hello</Text>
+        <Text>Videos</Text>
         <Button title="Open Video" onPress={openVideo} />
       </View>
-
-      <Text style={styles.text}>Home Screen</Text>
     </View>
   );
 }
@@ -76,8 +103,9 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    padding: 20,
   },
   menu: {
     position: 'absolute',
@@ -87,5 +115,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: '600',
+  },
+  preview: {
+    width: 120,
+    height: 120,
+    borderRadius: 8,
+    marginTop: 10,
   },
 });
